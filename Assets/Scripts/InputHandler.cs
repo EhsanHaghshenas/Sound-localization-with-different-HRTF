@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -20,6 +21,9 @@ public class InputHandler : MonoBehaviour {
     
     [SerializeField] string inputFilename;
     [SerializeField] string outputFilename;
+
+    public AudioClip[] audioClips;
+    public AudioSource source;
     
     private string claimed_direction = "";
     private string actual_direction = "";
@@ -97,8 +101,8 @@ public class InputHandler : MonoBehaviour {
     
     public void SearchByIdKlang()
     {
-        // Generiere eine zufällige Zahl zwischen 0 und 10 und setze sie als searchIdKlang
-        string searchIdKlang = Random.Range(1, 28).ToString();
+        // Generiere eine zufällige Zahl zwischen 0 und 26 und setze sie als searchIdKlang
+        string searchIdKlang = Random.Range(0, 7).ToString();
         InputEntry result = inEntries.Find(entry => entry.id_klang == searchIdKlang);
         
         idKlang_Output.text = "";
@@ -111,7 +115,8 @@ public class InputHandler : MonoBehaviour {
         {
             idKlangText_Input.text = $"ID_Klang: {result.id_klang}";
             idKlang_Output.text = $"{result.id_klang}";
-                
+            source.PlayOneShot(audioClips[int.Parse(searchIdKlang)]);
+            
             idTestpersonText_Input.text = $"ID_Testperson: {result.id_testperson}";
             idTestperson_Output.text = $"{result.id_testperson}";
                 

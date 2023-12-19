@@ -1,0 +1,11 @@
+{
+    "Items": [
+        {
+            "id_klang": "21",
+            "id_testperson": "3",
+            "claimed_direction": "Horizontal Front",
+            "actual_direction": "horizontal_left",
+            "timestamp": "20:31:39"
+        }
+    ]
+}
