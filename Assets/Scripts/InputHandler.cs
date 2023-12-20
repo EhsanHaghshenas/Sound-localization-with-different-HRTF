@@ -49,40 +49,60 @@ public class InputHandler : MonoBehaviour {
 
         switch (claimedDirectionIdBtn)
         {
+            case 0:
+                claimed_direction = "front";
+                claimedDirection_Output.text = claimed_direction;
+                break;
             case 1:
-                claimed_direction = "Horizontal Front";
+                claimed_direction = "front_right";
                 claimedDirection_Output.text = claimed_direction;
             break;
             case 2:
-                claimed_direction = "Horizontal Front Left";
+                claimed_direction = "right";
                 claimedDirection_Output.text = claimed_direction;
             break;
             case 3:
-                claimed_direction = "Horizontal Left";
+                claimed_direction = "back_right";
                 claimedDirection_Output.text = claimed_direction;
             break;
             case 4:
-                claimed_direction = "Horizontal Back Left";
+                claimed_direction = "back";
                 claimedDirection_Output.text = claimed_direction;
             break;
             case 5:
-                claimed_direction = "Horizontal Back";
+                claimed_direction = "back_left";
                 claimedDirection_Output.text = claimed_direction;
             break;
             case 6:
-                claimed_direction = "Horizontal Back Right";
+                claimed_direction = "left";
                 claimedDirection_Output.text = claimed_direction;
             break;
             case 7:
-                claimed_direction = "Horizontal Right";
+                claimed_direction = "front_left";
                 claimedDirection_Output.text = claimed_direction;
             break;
             case 8:
-                claimed_direction = "Horizontal Front Right";
+                claimed_direction = "front_bottom";
                 claimedDirection_Output.text = claimed_direction;
             break;
             case 9:
-                claimed_direction = "Top";
+                claimed_direction = "bottom";
+                claimedDirection_Output.text = claimed_direction;
+            break;
+            case 10:
+                claimed_direction = "back_bottom";
+                claimedDirection_Output.text = claimed_direction; 
+            break;
+            case 11:
+                claimed_direction = "back_top";
+                claimedDirection_Output.text = claimed_direction;
+            break;
+            case 12:
+                claimed_direction = "top";
+                claimedDirection_Output.text = claimed_direction;
+            break;
+            case 13:
+                claimed_direction = "front_top";
                 claimedDirection_Output.text = claimed_direction;
             break;
         }
@@ -102,7 +122,7 @@ public class InputHandler : MonoBehaviour {
     public void SearchByIdKlang()
     {
         // Generiere eine zufällige Zahl zwischen 0 und 26 und setze sie als searchIdKlang
-        string searchIdKlang = Random.Range(0, 7).ToString();
+        string searchIdKlang = Random.Range(0, 42).ToString();
         InputEntry result = inEntries.Find(entry => entry.id_klang == searchIdKlang);
         
         idKlang_Output.text = "";
@@ -115,7 +135,7 @@ public class InputHandler : MonoBehaviour {
         {
             idKlangText_Input.text = $"ID_Klang: {result.id_klang}";
             idKlang_Output.text = $"{result.id_klang}";
-            source.PlayOneShot(audioClips[int.Parse(searchIdKlang)]);
+            //source.PlayOneShot(audioClips[int.Parse(searchIdKlang)]);
             
             idTestpersonText_Input.text = $"ID_Testperson: {result.id_testperson}";
             idTestperson_Output.text = $"{result.id_testperson}";
