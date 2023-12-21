@@ -23,11 +23,17 @@ public static class FileHandler {
     {
         string content = ReadFile(GetPath(filename));
 
+        //return JsonUtility.FromJson<List<T>>(content);
         if (string.IsNullOrEmpty(content) || content == "{}")
         {
             return new List<T>();
         }
+        Debug.Log("---");
+        Debug.Log(content);
+        Debug.Log("---");
 
+        var test = JsonHelper.FromJson<T>(content);
+        Debug.Log(test);
         List<T> res = JsonHelper.FromJson<T>(content)?.ToList() ?? new List<T>();
         return res;
     }

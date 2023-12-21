@@ -34,6 +34,9 @@ public class InputHandler : MonoBehaviour {
     private void Start () {
         inEntries = FileHandler.ReadListFromJSON<InputEntry> (inputFilename);
         outEntries = FileHandler.ReadListFromJSON<OutputEntry>(outputFilename);
+        foreach( var x in inEntries) {
+            Debug.Log( x);
+        }
         
         randomButton.onClick.AddListener(SearchByIdKlang);
     }
@@ -122,24 +125,49 @@ public class InputHandler : MonoBehaviour {
     public void SearchByIdKlang()
     {
         // Generiere eine zufällige Zahl zwischen 0 und 26 und setze sie als searchIdKlang
-        string searchIdKlang = Random.Range(0, 42).ToString();
-        InputEntry result = inEntries.Find(entry => entry.id_klang == searchIdKlang);
+        //string searchIdKlang = Random.Range(0, 2).ToString();
+        int randomInt = Random.Range(0, inEntries.Count);
+        Debug.Log(randomInt);
+        InputEntry result = inEntries[randomInt];
+        //InputEntry result = inEntries.Find(entry => entry.id_klang == searchIdKlang);
+        
         
         idKlang_Output.text = "";
         idTestperson_Output.text = "";
         claimedDirection_Output.text = "";
         
-        Debug.Log (GetPath (inputFilename));
+        // Debug.Log (GetPath (inputFilename));
+
         
         if (result != null)
         {
             idKlangText_Input.text = $"ID_Klang: {result.id_klang}";
             idKlang_Output.text = $"{result.id_klang}";
             //source.PlayOneShot(audioClips[int.Parse(searchIdKlang)]);
+            string path = GetPath(".");
+            string filePath = path.Substring(0, path.Length - 2) + "/" + result.name_wav_file;
+            Debug.Log(filePath);
+            AudioClip audioClip = Resources.Load<AudioClip>(filePath.Replace(".wav", ""));
+
+            if (audioClip == null)
+            {
+                Debug.LogError("Failed to load WAV file: " + result.name_wav_file);
+                return;
+            }
+
+            //source.clip = audioClip;
+
+            // source.Play();
+            
+            //source.PlayOneShot(klang_clip);
+            //source.PlayOneShot(audioClips[randomInt]);
+            
+            source.PlayOneShot(audioClip);
+
             
             idTestpersonText_Input.text = $"ID_Testperson: {result.id_testperson}";
             idTestperson_Output.text = $"{result.id_testperson}";
-                
+            Debug.Log(result.name_wav_file);   
             nameWavFileText_Input.text = $"Name Wav File: {result.name_wav_file}";
                 
             directionText_Input.text = $"Direction: {result.direction}";
@@ -147,7 +175,7 @@ public class InputHandler : MonoBehaviour {
         }
         else
         {
-            idKlangText_Input.text = $"Entry with ID Klang {searchIdKlang} not found.";
+            idKlangText_Input.text = $"Entry not found.";
             idTestpersonText_Input.text = "";
             nameWavFileText_Input.text = "";
             directionText_Input.text = "";
