@@ -145,7 +145,8 @@ public class InputHandler : MonoBehaviour {
             idKlang_Output.text = $"{result.id_klang}";
             //source.PlayOneShot(audioClips[int.Parse(searchIdKlang)]);
             string path = GetPath(".");
-            string filePath = path.Substring(0, path.Length - 2) + "/" + result.name_wav_file;
+            //string filePath = path.Substring(0, path.Length - 2) + "/" + result.name_wav_file;
+            string filePath = result.name_wav_file;
             Debug.Log(filePath);
             AudioClip audioClip = Resources.Load<AudioClip>(filePath.Replace(".wav", ""));
 
