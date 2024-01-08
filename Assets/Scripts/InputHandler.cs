@@ -31,6 +31,9 @@ public class InputHandler : MonoBehaviour {
     List<InputEntry> inEntries = new List<InputEntry> ();
     List<OutputEntry> outEntries = new List<OutputEntry>();
 
+    private int countVar = 0;
+    private int sumFromEntries;
+    
     private void Start () {
         inEntries = FileHandler.ReadListFromJSON<InputEntry> (inputFilename);
         outEntries = FileHandler.ReadListFromJSON<OutputEntry>(outputFilename);
@@ -39,6 +42,9 @@ public class InputHandler : MonoBehaviour {
         }
         
         randomButton.onClick.AddListener(SearchByIdKlang);
+        
+        // Init
+        sumFromEntries = inEntries.Count;
     }
 
     public void AddNameToList (int claimedDirectionIdBtn)
@@ -129,6 +135,7 @@ public class InputHandler : MonoBehaviour {
         int randomInt = Random.Range(0, inEntries.Count);
         Debug.Log(randomInt);
         InputEntry result = inEntries[randomInt];
+        inEntries.RemoveAt(randomInt);
         //InputEntry result = inEntries.Find(entry => entry.id_klang == searchIdKlang);
         
         
@@ -137,7 +144,7 @@ public class InputHandler : MonoBehaviour {
         claimedDirection_Output.text = "";
         
         // Debug.Log (GetPath (inputFilename));
-
+    
         
         if (result != null)
         {
@@ -147,9 +154,12 @@ public class InputHandler : MonoBehaviour {
             string path = GetPath(".");
             //string filePath = path.Substring(0, path.Length - 2) + "/" + result.name_wav_file;
             string filePath = result.name_wav_file;
-            Debug.Log(filePath);
+            //Debug.Log(filePath);
             AudioClip audioClip = Resources.Load<AudioClip>(filePath.Replace(".wav", ""));
 
+            countVar++;
+            Debug.Log("Sound-Nummer: " + countVar + "/" + sumFromEntries);
+            
             if (audioClip == null)
             {
                 Debug.LogError("Failed to load WAV file: " + result.name_wav_file);
@@ -168,11 +178,12 @@ public class InputHandler : MonoBehaviour {
             
             idTestpersonText_Input.text = $"ID_Testperson: {result.id_testperson}";
             idTestperson_Output.text = $"{result.id_testperson}";
-            Debug.Log(result.name_wav_file);   
+            // Debug.Log(result.name_wav_file);   
             nameWavFileText_Input.text = $"Name Wav File: {result.name_wav_file}";
                 
             directionText_Input.text = $"Direction: {result.direction}";
             actual_direction = $"{result.direction}";
+           
         }
         else
         {

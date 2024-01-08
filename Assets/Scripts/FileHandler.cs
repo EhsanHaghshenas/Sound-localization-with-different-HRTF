@@ -76,7 +76,7 @@ public static class FileHandler {
             using (StreamReader reader = new StreamReader(path))
             {
                 string content = reader.ReadToEnd();
-                //Debug.Log($"File content for {path}: {content}");
+                Debug.Log($"File content for {path}: {content}");
                 return content;
             }
         }
